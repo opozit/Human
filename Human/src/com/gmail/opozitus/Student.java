@@ -6,11 +6,13 @@ public class Student extends Human implements Comparable<Object> {
 
 	private GroupOfStudent group;
 	private String id;
+	private String sortMetod;
 
 	public Student(String name, String surname, String birthDay, boolean sex, GroupOfStudent group, String id) {
 		super(name, surname, birthDay, sex);
 		this.group = group;
 		this.id = id;
+		this.sortMetod = "a";
 	}
 
 	public Student() {
@@ -33,6 +35,14 @@ public class Student extends Human implements Comparable<Object> {
 		this.id = id;
 	}
 
+	public String getSortMetod() {
+		return sortMetod;
+	}
+
+	public void setSortMetod(String sortMetod) {
+		this.sortMetod = sortMetod;
+	}
+
 	@Override
 	public String toString() {
 		Formatter f = new Formatter();
@@ -48,13 +58,14 @@ public class Student extends Human implements Comparable<Object> {
 	public int compareTo(Object o) {
 		// TODO Auto-generated method stub
 		Student st = (Student) o;
-		if (surname.charAt(0) > st.getSurname().charAt(0)) {
-			return 1;
-		} else if (surname.charAt(0) < st.getSurname().charAt(0)) {
-			return -1;
+		if (st.getSortMetod().equals("b")) {
+			return this.birthDay.compareTo(st.getBirthDay());
+		} else if (st.getSortMetod().equals("c")) {
+			return id.compareToIgnoreCase(st.getId());
 		} else {
-			return 0;
+			return surname.compareToIgnoreCase(st.getSurname());
 		}
+
 	}
 
 }

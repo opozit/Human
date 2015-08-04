@@ -60,8 +60,26 @@ public class InputInterface {
 			} else if (answ.equalsIgnoreCase("h")) {
 				help();
 			} else if (answ.equalsIgnoreCase("sort")) {
-				Arrays.sort(group.getGroup());
-				System.out.println("Студентів у групі відсортовано");
+				if (group.getGroup().length == 0) {
+					System.out.println("В групі відсутні студенти.");
+					System.out.println("Спочатку додайте студентів");
+				} else {
+					System.out.println("Виберіть метод сортування:");
+					System.out.println("a - за прізвищем (за замовчуванням)");
+					System.out.println("b - за датою народження");
+					System.out.println("c - за номером залікової книжки");
+					String val = sc.nextLine();
+					for (Student student : group.getGroup()) {
+						student.setSortMetod(val);
+					}
+					Arrays.sort(group.getGroup());
+					if (!val.equals("a") && !val.equals("b")) {
+						System.out.println("Студентів у групі відсортовано (за замовчуванням)");
+					} else {
+						System.out.println("Студентів у групі відсортовано");
+					}
+
+				}
 
 			} else {
 				if (!answ.equalsIgnoreCase("x")) {
@@ -70,6 +88,7 @@ public class InputInterface {
 			}
 
 		} while (!answ.equalsIgnoreCase("x"));
+
 	}
 
 	public Student add() {
@@ -103,7 +122,7 @@ public class InputInterface {
 		WriteFile wf = new WriteFile(filePath);
 		for (Student student : group) {
 			Formatter f = new Formatter();
-			f.format("%10.12s	%10.12s	%td.%tm.%ty %b %10.15s   ", student.getName(), student.getSurname(),
+			f.format("%10.12s	%10.12s	%td.%tm.%ty %5.7b %10.15s   ", student.getName(), student.getSurname(),
 					student.getBirthDay(), student.getBirthDay(), student.getBirthDay(), student.isSex(),
 					student.getId());
 			wf.writeLine(f.toString());
